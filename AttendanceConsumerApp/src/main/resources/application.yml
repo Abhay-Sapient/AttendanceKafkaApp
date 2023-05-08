@@ -1,4 +1,11 @@
 spring:
+  profiles:
+    active: dev
+server:
+  port: 8082
+
+---
+spring:
   kafka:
     consumer:
      bootstrap-servers: localhost:9092
@@ -17,5 +24,28 @@ spring:
   h2:
     console:
       enabled: true
+  config:
+    activate:
+      on-profile: local
 
-   
+---   
+
+spring:
+  kafka:
+    consumer:
+     bootstrap-servers: localhost:9092
+     key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+     value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+     group-id: attendance-event-group
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/attendance
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+  config:
+    activate:
+      on-profile: dev

@@ -39,6 +39,7 @@ public class AttendanceProducer {
 
 		objectMapper.registerModule(new JavaTimeModule());
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		
 		Integer key = event.getEventId();
 		if (event.getTimeStamp() == null) {
 			event.setTimeStamp(LocalDateTime.now());

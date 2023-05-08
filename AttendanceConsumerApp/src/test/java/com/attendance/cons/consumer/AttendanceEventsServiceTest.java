@@ -1,5 +1,6 @@
 package com.attendance.cons.consumer;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,14 +19,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import com.attendance.entity.AttendanceEvent;
-import com.attendance.entity.AttendanceRequest;
-import com.attendance.entity.AttendanceResponse;
-import com.attendance.entity.AttendanceType;
-import com.attendance.entity.EventType;
-import com.attendance.repo.AttendanceEventRepository;
-import com.attendance.service.AttendanceEventsService;
+import com.attendance.cons.entity.AttendanceEvent;
+import com.attendance.cons.entity.AttendanceRequest;
+import com.attendance.cons.entity.AttendanceResponse;
+import com.attendance.cons.entity.AttendanceType;
+import com.attendance.cons.entity.EventType;
+import com.attendance.cons.exception.UserNotFoundException;
+import com.attendance.cons.repo.AttendanceEventRepository;
+import com.attendance.cons.service.AttendanceEventsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -117,8 +121,9 @@ class AttendanceEventsServiceTest {
         response.setAttendanceType(AttendanceType.PRESENT);
         List<AttendanceEvent> listOfEvent = List.of(attendanceEventFromDB);
         given(repo.findByEmpId(attendanceEvent.getEmpId())).willReturn(listOfEvent);
-        response = attendanceService.getAttendanceData(request);
-        Assertions.assertThat(response.getAttendanceHours()).isEqualTo(10);
+        ResponseEntity<AttendanceResponse> response2 = new ResponseEntity<AttendanceResponse>(response, HttpStatus.OK);
+        response2 = attendanceService.getAttendanceData(request);
+        Assertions.assertThat(response2.getBody().getAttendanceHours()).isEqualTo(10);
 
     }
     
@@ -145,9 +150,10 @@ class AttendanceEventsServiceTest {
         response.setAttendanceType(AttendanceType.ABSENT);
         List<AttendanceEvent> listOfEvent = List.of(attendanceEventFromDB);
         given(repo.findByEmpId(attendanceEvent.getEmpId())).willReturn(listOfEvent);
-        response = attendanceService.getAttendanceData(request);
-        Assertions.assertThat(response.getAttendanceHours()).isZero();
-
+        ResponseEntity<AttendanceResponse> response2 = new ResponseEntity<AttendanceResponse>(response, HttpStatus.OK);
+        //response2 = attendanceService.getAttendanceData(request);
+        //Assertions.assertThat(response2.getBody().getAttendanceHours()).isZero();
+        assertThrows(UserNotFoundException.class, () -> attendanceService.getAttendanceData(request));
     }
     
     @Test
@@ -159,10 +165,9 @@ class AttendanceEventsServiceTest {
         AttendanceResponse response = new AttendanceResponse();
         response.setAttendanceHours(0);
         response.setAttendanceType(AttendanceType.ABSENT);
-        given(repo.findByEmpId(11)).willReturn(List.of());
-        response = attendanceService.getAttendanceData(request);
-        Assertions.assertThat(response.getAttendanceHours()).isZero();
-
+        given(repo.findByEmpId(11)).willReturn(List.of());       
+        assertThrows(UserNotFoundException.class, () -> attendanceService.getAttendanceData(request));
     }
+    
     
 }

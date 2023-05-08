@@ -1,4 +1,4 @@
-package com.attendance.entity;
+package com.attendance.cons.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AttendanceResponse {
 
+	private Integer empId;
 	private Integer attendanceHours;
 	private AttendanceType attendanceType;
 	

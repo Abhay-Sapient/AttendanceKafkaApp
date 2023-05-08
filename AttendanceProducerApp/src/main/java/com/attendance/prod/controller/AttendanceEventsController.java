@@ -19,6 +19,7 @@ public class AttendanceEventsController {
 	@PostMapping("/swipe")
 	public ResponseEntity<AttendanceEvent> swipeInEvent(@RequestBody AttendanceEvent event) throws JsonProcessingException {
 		attendanceProducer.sendAttendanceEvent(event);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(event);
 	}
 	

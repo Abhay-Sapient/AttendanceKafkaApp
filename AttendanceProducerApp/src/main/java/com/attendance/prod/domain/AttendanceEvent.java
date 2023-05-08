@@ -2,6 +2,8 @@ package com.attendance.prod.domain;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class AttendanceEvent {
+	@JsonIgnore
 	private Integer eventId;
 	private EventType eventType;
 	private LocalDateTime timeStamp; 

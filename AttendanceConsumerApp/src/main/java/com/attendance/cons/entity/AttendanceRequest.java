@@ -1,4 +1,4 @@
-package com.attendance.entity;
+package com.attendance.cons.entity;
 
 import java.time.LocalDate;
 

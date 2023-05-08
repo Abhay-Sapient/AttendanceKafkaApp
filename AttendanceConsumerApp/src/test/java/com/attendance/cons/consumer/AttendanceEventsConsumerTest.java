@@ -16,10 +16,10 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.attendance.cons.AttendanceEventsConsumer;
-import com.attendance.entity.AttendanceEvent;
-import com.attendance.entity.EventType;
-import com.attendance.repo.AttendanceEventRepository;
-import com.attendance.service.AttendanceEventsService;
+import com.attendance.cons.entity.AttendanceEvent;
+import com.attendance.cons.entity.EventType;
+import com.attendance.cons.repo.AttendanceEventRepository;
+import com.attendance.cons.service.AttendanceEventsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

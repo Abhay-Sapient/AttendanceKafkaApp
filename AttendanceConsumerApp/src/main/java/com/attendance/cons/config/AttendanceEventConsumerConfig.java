@@ -1,4 +1,4 @@
-package com.attendance.config;
+package com.attendance.cons.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;

@@ -1,4 +1,4 @@
-package com.attendance.entity;
+package com.attendance.cons.entity;
 
 import java.time.LocalDateTime;
 
@@ -7,7 +7,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,10 +27,12 @@ public class AttendanceEvent {
 	@GeneratedValue
 	private Integer eventId;
 	
+	//these columns are not required to be stored in approach-1
+	//@Transient
 	@Enumerated(EnumType.STRING)
 	private EventType eventType;
 	
-	@Transient
+	//@Transient
 	private LocalDateTime timeStamp; 
 		
 	private Integer empId;
